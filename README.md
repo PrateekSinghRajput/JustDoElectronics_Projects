@@ -50,5 +50,8 @@ With this system, daily travel to crop fields to operate irrigation pumps can be
 
 ---
 
+![PZEM004T_sensor1](https://github.com/user-attachments/assets/cb851cfa-0e06-4ced-8261-7116d3c5eb05)
+
+
 🙏 Thank you for helping automate farming and making irrigation smarter!  
 
