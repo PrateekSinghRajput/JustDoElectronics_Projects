@@ -5,7 +5,7 @@
 #include <PZEM004Tv30.h>
 #include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x27, 16, 2);
-PZEM004Tv30 pzem(D7, D8);
+PZEM004Tv30 pzem(2, 3);
 
 void setup() {
   Serial.begin(115200);
