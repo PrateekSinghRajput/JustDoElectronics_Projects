@@ -9,7 +9,7 @@ JustDoElectronics focuses on making embedded hardware projects accessible, offer
 ## Features ✨
 
 - Modular and production-ready embedded C/C++ code examples 🛠️
-- Support for popular communication protocols: I2C, SPI, UART, CAN, LoRa 📡
+- Support for popular communication protocols: I2C, SPI, UART, CAN, LoRa, WiFi, Blutooth 📡
 - Sensor interfacing and data visualization techniques 📊
 - Integration with cloud platforms for IoT applications ☁️
 - Rich documentation with schematics, PCB layouts, and tutorials 📝
@@ -20,13 +20,13 @@ JustDoElectronics focuses on making embedded hardware projects accessible, offer
 - Microcontrollers: Arduino (AVR), ESP32, STM32, RA4M1 🖥️
 - Communication protocols: I2C, SPI, UART, CAN, LoRaWAN, ESP-NOW 📶
 - Programming Languages: C, C++, Arduino IDE, PlatformIO 💻
-- Tools: Git, GitHub, VSCode, PlatformIO, Arduino IDE ⚙️
+- Tools: Git, GitHub, VSCode, PlatformIO, Arduino IDE, STMCube IDE ⚙️
 
 ## Getting Started 🚀
 
 ### Prerequisites ✅
 
-- Compatible microcontroller development board (e.g. ESP32, Arduino Uno, STM32) 🔌
+- Compatible microcontroller development board  🔌
 - Arduino IDE or PlatformIO installed on your PC 💻
 - USB cable for programming and serial communication 🔗
 - Basic knowledge of flashing firmware to microcontrollers 📖
