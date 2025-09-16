@@ -1,4 +1,4 @@
-# Vehicle Accident Alert System Using ADXL-335 Sensor | GPS | GSM
+# Vehicle Accident Alert System Using ADXL-335 Sensor 
 
 [![Watch the video](https://img.youtube.com/vi/Bku3CtTWgqo/hqdefault.jpg)](https://youtu.be/Bku3CtTWgqo?si=RD02xtYHzjYiNUwO)
 
