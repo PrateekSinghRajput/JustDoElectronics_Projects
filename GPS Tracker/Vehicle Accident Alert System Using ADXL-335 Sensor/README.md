@@ -47,19 +47,6 @@ This system aims to enhance road safety by providing rapid accident alert notifi
 
 ---
 
-## Installation & Setup
-
-1. Connect components as per the wiring summary.  
-2. Install required Arduino libraries:
-   - LiquidCrystal_I2C  
-   - TinyGPSPlus  
-   - Math.h (standard)  
-3. Configure mobile number in the source code for alerting.  
-4. Upload the Arduino code to the Nano board.  
-5. Power the system and test by simulating an impact on the ADXL-335 sensor.  
-
----
-
 ## Code and Circuit Diagram
 
 Find full source code, detailed circuit diagrams, and step-by-step instructions on the project website:
@@ -68,15 +55,4 @@ Find full source code, detailed circuit diagrams, and step-by-step instructions 
 
 ---
 
-## Video Demonstration
 
-Watch the complete build and demonstration of the system here:
-
-[![Watch the video](https://img.youtube.com/vi/Bku3CtTWgqo/hqdefault.jpg)](https://youtu.be/Bku3CtTWgqo?si=RD02xtYHzjYiNUwO)
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Bku3CtTWgqo?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
----
-
-
-*This README is inspired by the Just Do Electronics Vehicle Accident Alert System video (May 28, 2024).*  
