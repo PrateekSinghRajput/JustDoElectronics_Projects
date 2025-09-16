@@ -9,7 +9,7 @@ JustDoElectronics focuses on making embedded hardware projects accessible, offer
 ## Features ✨
 
 - Modular and production-ready embedded C/C++ code examples 🛠️
-- Support for popular communication protocols: I2C, SPI, UART, CAN, LoRa, WiFi, Blutooth 📡
+- Support for popular communication protocols: I2C, SPI, UART, CAN, LoRa, WiFi, Bluetooth 📡
 - Sensor interfacing and data visualization techniques 📊
 - Integration with cloud platforms for IoT applications ☁️
 - Rich documentation with schematics, PCB layouts, and tutorials 📝
