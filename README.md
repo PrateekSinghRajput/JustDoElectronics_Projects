@@ -1,57 +1,47 @@
-# 🌾 Controlling or Monitoring AC Power
+# JustDoElectronics Projects ⚙️🔌
 
-## 📞 GSM-Based 3-Phase Motor Starter Using DTMF
+Welcome to the official repository of **JustDoElectronics** — a collection of high-quality open-source electronics and embedded systems projects by Prateek Singh Rajput. 🚀
 
-### 🚀 Overview
+## About The Project 📚
 
-This project automates farm irrigation by allowing farmers to control 3-phase AC motors remotely using **GSM** and **DTMF** technology.  
-With this system, daily travel to crop fields to operate irrigation pumps can be replaced by simple phone calls, making irrigation more efficient and cost-effective for farmers. 🚜💧
+JustDoElectronics focuses on making embedded hardware projects accessible, offering well-documented code and design files for IoT, microcontroller, sensor, and robotic systems. Most projects use Arduino, ESP32, STM32, and other popular microcontroller platforms. 🤖💡
 
-### ✨ Features
+## Features ✨
 
-- 📱 Remote motor control using GSM SIM modules and DTMF signals  
-- 🛠️ Arduino-based C++ firmware for easy hardware integration  
-- ⚡ Reliable switching of 3-phase motor starters for AC power  
-- 🌐 No Internet needed—works entirely through mobile phone calls and keypad tones  
+- Modular and production-ready embedded C/C++ code examples 🛠️
+- Support for popular communication protocols: I2C, SPI, UART, CAN, LoRa 📡
+- Sensor interfacing and data visualization techniques 📊
+- Integration with cloud platforms for IoT applications ☁️
+- Rich documentation with schematics, PCB layouts, and tutorials 📝
+- Regular updates and new project additions 🔄
 
-### 📋 Table of Contents
+## Tech Stack 🧰
 
-- [Overview](#-overview)  
-- [Features](#-features)  
-- [Hardware Requirements](#-hardware-requirements)  
-- [Installation](#-installation)  
-- [Usage](#-usage)  
-- [Contribution](#-contribution)  
-- [License](#-license)  
+- Microcontrollers: Arduino (AVR), ESP32, STM32, RA4M1 🖥️
+- Communication protocols: I2C, SPI, UART, CAN, LoRaWAN, ESP-NOW 📶
+- Programming Languages: C, C++, Arduino IDE, PlatformIO 💻
+- Tools: Git, GitHub, VSCode, PlatformIO, Arduino IDE ⚙️
 
-### 🔧 Hardware Requirements
+## Getting Started 🚀
 
-- Arduino or compatible microcontroller  
-- SIM800L/SIM900 GSM module  
-- DTMF decoder module  
-- Relay board for 3-phase starter control  
-- 3-phase motor setup  
+### Prerequisites ✅
 
-### 💻 Installation
+- Compatible microcontroller development board (e.g. ESP32, Arduino Uno, STM32) 🔌
+- Arduino IDE or PlatformIO installed on your PC 💻
+- USB cable for programming and serial communication 🔗
+- Basic knowledge of flashing firmware to microcontrollers 📖
 
-1. Assemble the hardware according to the diagrams and `docs/`.  
-2. Upload the provided Arduino C++ firmware from the `code/` folder using Arduino IDE.  
-3. Insert an active SIM card into the GSM module and power everything on.  
-4. Connect relay outputs to the motor starter circuits.
+## License 📄
 
-### 📞 Usage  
+All projects under JustDoElectronics are licensed under the MIT License. See the [LICENSE](LICENSE.txt) file for details.
 
-- Call the SIM number installed in the GSM module from your phone.  
-- Use DTMF keypad:  
-  - Press **'1'** to **start** the irrigation motor ▶️  
-  - Press **'0'** to **stop** the motor ⏹️  
-- The microcontroller receives the DTMF signal and controls the relay to switch the AC power.
+## Contact 📬
 
+Prateek Singh Rajput  
+GitHub: [@PrateekSinghRajput](https://github.com/PrateekSinghRajput)  
+Email: justdoelectronics@gmail.com
+YouTube: [JustDoElectronics Channel](https://www.youtube.com/c/JustDoElectronics) 🎥
 
 ---
 
-![PZEM004T_sensor1](https://github.com/user-attachments/assets/cb851cfa-0e06-4ced-8261-7116d3c5eb05)
-
-
-🙏 Thank you for helping automate farming and making irrigation smarter!  
-
+Thank you for your interest in JustDoElectronics! Feel free to explore, learn, contribute, and build cool electronics projects. ⚡️
