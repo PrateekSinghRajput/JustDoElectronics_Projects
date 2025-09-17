@@ -3,87 +3,110 @@
 //wwww.prateeks.in
 //https://www.youtube.com/c/JustDoElectronics/videos
 
-#include <LiquidCrystal.h>
-LiquidCrystal lcd(12, 11, 10, 9, 8, 7);//RS,EN,D4,D5,D6,D7
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 #include "SoftwareSerial.h"
-#define blue 2
-#define green 3
-#define red 4
-unsigned int f;
+#include "DFRobotDFPlayerMini.h"
+DFRobotDFPlayerMini myDFPlayer;
+void printDetail(uint8_t type, int value);
 
+SoftwareSerial mySoftwareSerial(2, 3);
 
-void setup()
-{
-  lcd.begin(16, 2);
+void setup() {
+
+  lcd.init();
+  lcd.backlight();
   lcd.setCursor(0, 0);
-  lcd.print("Sign Language to");
+  lcd.print("Sign Language To");
   lcd.setCursor(0, 1);
   lcd.print("Speech Convert");
-  delay(6000);
+  delay(4000);
   lcd.clear();
-  pinMode(blue, OUTPUT);
-  pinMode(green, OUTPUT);
-  pinMode(red, OUTPUT);
+
+  pinMode(A0, INPUT);
+  pinMode(A1, INPUT);
+  pinMode(A2, INPUT);
+
   Serial.begin(9600);
+  mySoftwareSerial.begin(9600);
+  Serial.begin(115200);
   Serial.println();
+  Serial.println(F("Initializing DFPlayer..."));
 
-
-
+  if (!myDFPlayer.begin(mySoftwareSerial)) {
+    Serial.println(F("Unable to begin:"));
+    Serial.println(F("1.Please recheck the connection!"));
+    Serial.println(F("2.Please insert the SD card!"));
+    while (true)
+      ;
+  }
+  Serial.println(F("DFPlayer Mini online."));
+  myDFPlayer.volume(30);
 }
 
-void loop()
-{
-  f = analogRead(0);
-  Serial.println(f);
-  if (f > 720)                       //No Bend; Blue LED Glows
-  {
-    digitalWrite(blue, HIGH);
-    digitalWrite(green, LOW);
-    digitalWrite(red, LOW);
-    Serial.println("Please Give Me Water");
+void loop() {
+
+  int one = analogRead(A0);
+  int two = analogRead(A1);
+  int three = analogRead(A2);
+
+  Serial.print("Sensor1 ");
+  Serial.print(one);
+  Serial.println("\t");
+
+  //One
+  if (one <= 150) {
     lcd.clear();
     lcd.setCursor(0, 0);
-    lcd.print("Cmd 1");
-    lcd.setCursor(0, 1);
-    lcd.print(" Give Me Water");
+    lcd.print("I Am Hungry");
+    delay(500);
+    myDFPlayer.play(1);
+    delay(1000);
+
+  }
+
+   if (one >= 300) {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Help Me To");
+     lcd.setCursor(0, 1);
+    lcd.print("Reach Home");
+    delay(500);
+    myDFPlayer.play(2);
+    delay(1000);
+
+  }
+
+  //Two
+  else if (two <= 240) {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Call The Police");
+
+    delay(500);
+    myDFPlayer.play(3);
     delay(1000);
   }
-  else if ((f < 320) && (f > 280))   //Small Bend; Green LED Glows
-  {
-    digitalWrite(green, HIGH);
-    digitalWrite(blue, LOW);
-    digitalWrite(red, LOW);
-    Serial.println("Please Give Me Food");
+
+  //Three
+  else if (three <= 215) {
     lcd.clear();
     lcd.setCursor(0, 0);
-    lcd.print("Cmd 2");
-    lcd.setCursor(0, 1);
-    lcd.print("Give Me Food");
+    lcd.print("I Need Water");
+    lcd.setCursor(1, 1);
+    lcd.print("");
+    delay(500);
+    myDFPlayer.play(5);
     delay(1000);
+
   }
-  else if ((f < 200) && (f > 100))   //Small Bend; Green LED Glows
-  {
-    digitalWrite(green, HIGH);
-    digitalWrite(blue, LOW);
-    digitalWrite(red, LOW);
-    Serial.println("Give Me Water");
+
+  else {
     lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Cmd 3");
-    lcd.setCursor(0, 1);
-    lcd.print("Give Me Water");
-    delay(1000);
-  }
-  else                              // Larger Bend; RED LED Glows
-  {
-    if (f > 100)
-      digitalWrite(red, HIGH);
-    digitalWrite(green, LOW);
-    digitalWrite(blue, LOW);
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("No Sign Language");
+    lcd.setCursor(1, 0);
+    lcd.print("NOTHING");
   }
   delay(50);
 }
+
