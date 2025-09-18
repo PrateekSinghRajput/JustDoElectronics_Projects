@@ -80,9 +80,3 @@ This project employs an **Arduino Uno** microcontroller integrated with an **RFI
 
 Made with ❤️ for smarter and efficient toll management! 🚦
 
-
-![Circuit Diagram](https://github.com/PrateekSinghRajput/Arduino-Based-Toll-Collection-System/assets/92904643/9d6f2c26-26c4-4e5f-b192-5da547d9f2fc)
-
-
-![Circuit](https://github.com/PrateekSinghRajput/Arduino-Based-Toll-Collection-System/assets/92904643/2806e061-fff4-4b73-8828-05be74df74bf)
-
