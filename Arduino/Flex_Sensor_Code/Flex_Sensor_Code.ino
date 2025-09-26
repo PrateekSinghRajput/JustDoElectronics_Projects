@@ -1,6 +1,5 @@
 
 //Prateek
-//wwww.prateeks.in
 //https://www.youtube.com/c/JustDoElectronics/videos
 
 #include <LiquidCrystal_I2C.h>
@@ -109,4 +108,5 @@ void loop() {
   }
   delay(50);
 }
+
 
