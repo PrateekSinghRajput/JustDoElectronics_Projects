@@ -50,7 +50,7 @@ void setup() {
 void sendSMS(const char* message) {
   Serial.println("AT+CMGF=1");     
   delay(500);
-  Serial.println("AT+CMGS=\"+919975617490\"");  
+  Serial.println("AT+CMGS=\"+91xxxxxxxxx\"");  
   delay(500);
   Serial.print(message);
   delay(200);
