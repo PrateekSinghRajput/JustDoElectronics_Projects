@@ -129,7 +129,7 @@ String ipAddressStr = "";
 
 // WiFi credentials - Replace with your actual credentials
 const char* ssid = "Prateek";
-const char* password = "justdoelectronics@#12345";
+const char* password = "12345@#12345";
 
 // Button debounce variables
 const unsigned long debounceDelay = 50;  // Debounce delay in milliseconds
