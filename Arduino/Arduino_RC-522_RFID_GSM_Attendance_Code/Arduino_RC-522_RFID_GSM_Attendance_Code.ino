@@ -217,7 +217,7 @@ void handleDeniedAccess(String reason) {
   } else {
     lcd.print("ACCESS DENIED");
     lcd.setCursor(0, 1);
-    lcd.print("See Serial Log");
+    lcd.print("Already Signed Today");
   }
 
   Serial.println("ACCESS DENIED: " + reason);
