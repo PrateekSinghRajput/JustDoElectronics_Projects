@@ -106,7 +106,7 @@ void SendSystemStartSMS() {
   Serial.println("Sending System Start SMS...");
   mySerial.println("AT+CMGF=1");
   delay(1000);
-  mySerial.println("AT+CMGS=\"+918830584864\"\r");
+  mySerial.println("AT+CMGS=\"+9188305848xx\"\r");
   delay(1000);
   mySerial.println("Alcohol Detector System is now ON. Monitoring started.");
   delay(100);
@@ -118,7 +118,7 @@ void SendAlertSMS() {
   Serial.println("Sending Alert SMS...");
   mySerial.println("AT+CMGF=1");
   delay(1000);
-  mySerial.println("AT+CMGS=\"+918830584864\"\r");
+  mySerial.println("AT+CMGS=\"+9188305848xx\"\r");
   delay(1000);
   mySerial.println("Alert! Alcohol Vapor Detected. Car is slow, please move to the side of the road.");
   delay(100);
