@@ -5,7 +5,7 @@
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 SoftwareSerial mySerial(2, 3);
 
-int gasSensor = A0;
+int gasSensor = A7;
 int data = 0;
 
 int Red = 8;
