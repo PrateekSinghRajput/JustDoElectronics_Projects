@@ -1,7 +1,3 @@
-// Project: RFID Attendance System
-// Components: Arduino Uno, MFRC522 RFID, DS3231 RTC, LiquidCrystal I2C LCD, SIM800L/GSM Module
-// Authors: Prateek, www.justdoelectronics.com, https://justdoelectronics.com
-
 #include <SPI.h>
 #include <SoftwareSerial.h>
 #include <LiquidCrystal_I2C.h>
@@ -203,7 +199,7 @@ void handleUserAccess(User &user) {
 }
 
 void handleUnauthorizedAccess() {
-  handleDeniedAccess("ID : Unknown / Access Denied");
+  handleDeniedAccess("ID : Unknown Card");
 }
 
 
@@ -212,12 +208,18 @@ void handleDeniedAccess(String reason) {
   lcd.clear();
   lcd.setCursor(0, 0);
 
-  if (reason.length() <= 16) {
-    lcd.print(reason);
-  } else {
+  if (reason.indexOf("Unknown") != -1) {
     lcd.print("ACCESS DENIED");
     lcd.setCursor(0, 1);
-    lcd.print("Already Signed ");
+    lcd.print("ID: Unknown Card");
+  } else if (reason.indexOf("Signed Out") != -1) {
+    lcd.print(reason.substring(0, 16));
+    lcd.setCursor(0, 1);
+    lcd.print("Signed Out Today");
+  } else if (reason.indexOf("mismatch") != -1) {
+    lcd.print(reason.substring(0, 16));
+    lcd.setCursor(0, 1);
+    lcd.print("Missing Check-In");
   }
 
   Serial.println("ACCESS DENIED: " + reason);
