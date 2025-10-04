@@ -31,11 +31,11 @@ struct User {
 };
 
 User users[] = {
-  { "A5810B05", "Prateek", "001", "+9188305848xx", 0, 0, 0 },
-  { "336A0A05", "Sonu", "002", "+9188305848xx", 0, 0, 0 },
-  { "A64E3202", "Punit", "003", "+9188305848xx", 0, 0, 0 },
-  { "29F427B4", "Rahul", "004", "+9188305848xx", 0, 0, 0 },
-  { "735EC01C", "Ram", "005", "+9188305848xx", 0, 0, 0 }
+  { "A5810B05", "Prateek", "001", "+9199756174xx", 0, 0, 0 },
+  { "336A0A05", "Sonu", "002", "+9199756174xx", 0, 0, 0 },
+  { "A64E3202", "Punit", "003", "+9199756174xx", 0, 0, 0 },
+  { "29F427B4", "Rahul", "004", "+9199756174xx", 0, 0, 0 },
+  { "735EC01C", "Ram", "005", "+9199756174xx", 0, 0, 0 }
 };
 
 void displayDateTime();
@@ -217,7 +217,7 @@ void handleDeniedAccess(String reason) {
   } else {
     lcd.print("ACCESS DENIED");
     lcd.setCursor(0, 1);
-    lcd.print("Already Signed Today");
+    lcd.print("Already Signed ");
   }
 
   Serial.println("ACCESS DENIED: " + reason);
