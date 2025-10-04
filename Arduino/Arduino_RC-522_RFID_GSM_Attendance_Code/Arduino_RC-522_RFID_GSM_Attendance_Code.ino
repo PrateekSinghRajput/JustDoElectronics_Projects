@@ -1,7 +1,8 @@
-//Prateek
-//www.prateeks.in
-//https://justdoelectronics.com
+// Project: RFID Attendance System
+// Components: Arduino Uno, MFRC522 RFID, DS3231 RTC, LiquidCrystal I2C LCD, SIM800L/GSM Module
+// Authors: Prateek, www.justdoelectronics.com, https://justdoelectronics.com
 
+#include <SPI.h>
 #include <SoftwareSerial.h>
 #include <LiquidCrystal_I2C.h>
 #include <RTClib.h>
@@ -25,17 +26,31 @@ struct User {
   String rollNumber;
   String mobileNumber;
   int state;
+  int lastActionDay;
+  int lastActionMonth;
 };
 
 User users[] = {
-  { "E3497CE2", "Prateek", "001", "+91xxxxxxxxxx", 0 },
-  { "E3EC04E2", "Sonu", "002", "+91xxxxxxxxxx", 0 },
-  { "C33149E2", "Punit", "003", "+91xxxxxxxxxx", 0 },
-  { "29F427B3", "Rahul", "004", "+91xxxxxxxxxx", 0 },
-  { "735EC01C", "Ram", "005", "+91xxxxxxxxxx", 0 }
+  { "A5810B05", "Prateek", "001", "+9188305848xx", 0, 0, 0 },
+  { "336A0A05", "Sonu", "002", "+9188305848xx", 0, 0, 0 },
+  { "A64E3202", "Punit", "003", "+9188305848xx", 0, 0, 0 },
+  { "29F427B4", "Rahul", "004", "+9188305848xx", 0, 0, 0 },
+  { "735EC01C", "Ram", "005", "+9188305848xx", 0, 0, 0 }
 };
 
+void displayDateTime();
+void rfidScan();
+void handleUserAccess(User &user);
+void handleUnauthorizedAccess();
+void handleDeniedAccess(String reason);
+void sendSMS(User &user, String status);
+void smsSend();
+void beepON();
+void info();
+String getCurrentDateTime();
+
 void setup() {
+
   lcd.init();
   lcd.backlight();
   Serial.begin(9600);
@@ -46,14 +61,19 @@ void setup() {
 
   if (!rtc.begin()) {
     lcd.setCursor(0, 0);
-    lcd.print("RTC NOT FOUND");
+    lcd.print("RTC NOT FOUND!");
+    Serial.println("Error: RTC NOT FOUND!");
     while (1)
       ;
   }
 
+  // rtc.adjust(DateTime(2025, 10, 4, 13, 39, 0));
+
   pinMode(buzzerPin, OUTPUT);
   pinMode(yellow, OUTPUT);
   pinMode(green, OUTPUT);
+
+  Serial.println("System Initialized.");
 
   lcd.setCursor(0, 0);
   lcd.print("    WELCOME    ");
@@ -70,6 +90,7 @@ void loop() {
 
 void displayDateTime() {
   DateTime now = rtc.now();
+
   lcd.setCursor(0, 0);
   lcd.print("Date: ");
   lcd.print(now.day());
@@ -80,12 +101,16 @@ void displayDateTime() {
 
   lcd.setCursor(0, 1);
   lcd.print("Time: ");
+  if (now.hour() < 10) lcd.print('0');
   lcd.print(now.hour());
   lcd.print(":");
+  if (now.minute() < 10) lcd.print('0');
   lcd.print(now.minute());
   lcd.print(":");
+  if (now.second() < 10) lcd.print('0');
   lcd.print(now.second());
-  delay(1000);
+
+  delay(100);
 }
 
 void rfidScan() {
@@ -95,11 +120,18 @@ void rfidScan() {
 
   String rfidTag = "";
   for (byte i = 0; i < rfid.uid.size; i++) {
+    if (rfid.uid.uidByte[i] < 0x10) {
+      rfidTag += "0";
+    }
     rfidTag += String(rfid.uid.uidByte[i], HEX);
   }
   rfidTag.toUpperCase();
 
-  for (int i = 0; i < sizeof(users) / sizeof(users[0]); i++) {
+  Serial.print("SCANNED TAG: ");
+  Serial.println(rfidTag);
+
+  int numUsers = sizeof(users) / sizeof(users[0]);
+  for (int i = 0; i < numUsers; i++) {
     if (rfidTag == users[i].rfidTag) {
       handleUserAccess(users[i]);
       rfid.PICC_HaltA();
@@ -112,8 +144,21 @@ void rfidScan() {
 }
 
 void handleUserAccess(User &user) {
+  DateTime now = rtc.now();
+  int currentDay = now.day();
+  int currentMonth = now.month();
+
+  bool alreadyActedToday = (currentDay == user.lastActionDay && currentMonth == user.lastActionMonth);
+
   beepON();
+
   if (user.state == 0) {
+
+    if (alreadyActedToday) {
+      handleDeniedAccess(user.name + ": Already Signed Out Today");
+      return;
+    }
+
     digitalWrite(green, HIGH);
     lcd.clear();
     lcd.setCursor(7, 0);
@@ -121,9 +166,21 @@ void handleUserAccess(User &user) {
     lcd.setCursor(11, 1);
     lcd.print(user.rollNumber);
     info();
-    sendSMS(user, "is Present at School");
+    sendSMS(user, "is Present at School (Check-In)");
+
     user.state = 1;
+    user.lastActionDay = currentDay;
+    user.lastActionMonth = currentMonth;
+    Serial.print(user.name);
+    Serial.println(" checked IN. New state: PRESENT.");
+
   } else {
+
+    if (!alreadyActedToday) {
+      handleDeniedAccess(user.name + ": Out/In mismatch or stale data");
+      return;
+    }
+
     digitalWrite(yellow, HIGH);
     lcd.clear();
     lcd.setCursor(7, 0);
@@ -131,21 +188,39 @@ void handleUserAccess(User &user) {
     lcd.setCursor(11, 1);
     lcd.print(user.rollNumber);
     info();
-    sendSMS(user, "is Out Of The School");
+    sendSMS(user, "is Out Of The School (Check-Out)");
+
     user.state = 0;
+    user.lastActionDay = currentDay;
+    user.lastActionMonth = currentMonth;
+    Serial.print(user.name);
+    Serial.println(" checked OUT. New state: ABSENT.");
   }
+
   delay(2000);
   digitalWrite(green, LOW);
   digitalWrite(yellow, LOW);
 }
 
 void handleUnauthorizedAccess() {
+  handleDeniedAccess("ID : Unknown / Access Denied");
+}
+
+
+void handleDeniedAccess(String reason) {
   digitalWrite(buzzerPin, HIGH);
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("ID : Unknown");
-  lcd.setCursor(0, 1);
-  lcd.print("Access denied");
+
+  if (reason.length() <= 16) {
+    lcd.print(reason);
+  } else {
+    lcd.print("ACCESS DENIED");
+    lcd.setCursor(0, 1);
+    lcd.print("See Serial Log");
+  }
+
+  Serial.println("ACCESS DENIED: " + reason);
   delay(1500);
   digitalWrite(buzzerPin, LOW);
   lcd.clear();
@@ -154,14 +229,24 @@ void handleUnauthorizedAccess() {
 void sendSMS(User &user, String status) {
   lcd.setCursor(0, 0);
   lcd.print("SMS Sending");
+  Serial.print("Sending SMS to: ");
+  Serial.println(user.mobileNumber);
+
   sim.println("AT+CMGF=1");
   delay(1000);
-  sim.println("AT+CMGS=\"" + user.mobileNumber + "\"\r");
+  sim.print("AT+CMGS=\"");
+  sim.print(user.mobileNumber);
+  sim.println("\"\r");
   delay(1000);
-  sim.print(user.name + " " + status + "\n" + getCurrentDateTime());
+
+  sim.print(user.name + " (" + user.rollNumber + ") " + status + ".");
+  sim.print("\nTime: ");
+  sim.println(getCurrentDateTime());
   delay(100);
   sim.println((char)26);
+
   smsSend();
+  Serial.println("SMS command sent.");
 }
 
 void smsSend() {
@@ -193,10 +278,11 @@ void info() {
   lcd.clear();
 }
 
+
 String getCurrentDateTime() {
   DateTime now = rtc.now();
   char buffer[30];
-  sprintf(buffer, "Date: %02d/%02d/%04d Time: %02d:%02d:%02d",
+  sprintf(buffer, "%02d/%02d/%04d %02d:%02d:%02d",
           now.day(), now.month(), now.year(), now.hour(), now.minute(), now.second());
   return String(buffer);
 }
