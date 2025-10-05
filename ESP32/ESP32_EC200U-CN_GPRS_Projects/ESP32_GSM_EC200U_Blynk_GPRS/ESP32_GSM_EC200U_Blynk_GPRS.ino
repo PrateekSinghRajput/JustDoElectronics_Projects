@@ -1,6 +1,6 @@
-#define BLYNK_TEMPLATE_ID "TMPL3uoHnnAya"
+#define BLYNK_TEMPLATE_ID "TMPL3zMy-lfVZ"
 #define BLYNK_TEMPLATE_NAME "IoT App"
-#define BLYNK_AUTH_TOKEN "tSmQNm3g66K62wTjaEQ-ADJgfy74bqHt"
+#define BLYNK_AUTH_TOKEN "klxL5aJx1pzaCAK03Tx3m7Mp2byS1d"
 
 #define TINY_GSM_MODEM_BG96
 #define SerialAT Serial1
@@ -10,7 +10,7 @@
 #define TXD1 17
 #define TINY_GSM_USE_GPRS true
 
-#define SMS_TARGET "+918830584864"
+#define SMS_TARGET "+9199756174xx"
 
 unsigned int counter = 0;
 int rx = -1;
@@ -62,7 +62,7 @@ void setup() {
   delay(1000);
 
   Serial.println("Sending initial SMS...");
-  if (modem.sendSMS(SMS_TARGET, "Board is connected")) {
+  if (modem.sendSMS(SMS_TARGET, "GPRS Board is connected")) {
     Serial.println("SMS sent successfully!");
   } else {
     Serial.println("SMS failed to send.");
@@ -74,7 +74,9 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("Send Data on Blynk App");
+  Serial.print("Send Data on Blynk App ");
+  Serial.print("Counter");
+  Serial.println(counter);
   delay(1000);
   Blynk.virtualWrite(V1, counter);
   delay(2000);
