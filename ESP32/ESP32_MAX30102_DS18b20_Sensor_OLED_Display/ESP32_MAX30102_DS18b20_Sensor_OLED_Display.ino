@@ -16,9 +16,9 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
-char auth[] = "klxL5aJx1pzaCAetK03Tx3m7Mp2byS1d";
+char auth[] = "klxL5aJx1pzaCAet3Tx3m7Mp2byS1d";
 char ssid[] = "Prateek";
-char pass[] = "justdoelectronics@#12345";
+char pass[] = "12345@#12345";
 
 MAX30105 particleSensor;
 
