@@ -12,13 +12,13 @@
 #define OLED_ADDR 0x3C
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
-#define ONE_WIRE_BUS 4
+#define ONE_WIRE_BUS 12
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
-char auth[] = "klxL5aJx1pzaCAet3Tx3m7Mp2byS1d";
+char auth[] = "klxL5aJx1pzaCAetK03Tx3m7Mp2byS1d";
 char ssid[] = "Prateek";
-char pass[] = "12345@#12345";
+char pass[] = "justdoelectronics@#12345";
 
 MAX30105 particleSensor;
 
